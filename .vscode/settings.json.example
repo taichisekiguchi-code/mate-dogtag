@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "liveServer.settings.port": 3000,
+  "liveServer.settings.root": "/public",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.firebase": true,
+    "**/node_modules": true
+  },
+  "emmet.includeLanguages": {
+    "javascript": "html"
+  }
+}
