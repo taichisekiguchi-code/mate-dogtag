@@ -1,0 +1,20 @@
+{
+  "name": "mate-dogtag-staging",
+  "version": "1.0.0",
+  "description": "mate Digital Dog Tag - Staging Environment",
+  "scripts": {
+    "dev": "npx live-server public --port=3000 --open",
+    "staging:deploy": "firebase hosting:channel:deploy staging --expires 7d",
+    "staging:url": "firebase hosting:channel:list",
+    "prod:deploy": "firebase deploy --only hosting",
+    "emulators": "firebase emulators:start --import=./seed-data --export-on-exit",
+    "seed": "node scripts/seed-firestore.js"
+  },
+  "dependencies": {
+    "firebase": "^10.7.0"
+  },
+  "devDependencies": {
+    "firebase-tools": "^13.0.0",
+    "live-server": "^1.2.2"
+  }
+}

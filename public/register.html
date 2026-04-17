@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>mate - 新規登録</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== Staging Banner ===== -->
+  <div class="staging-banner" id="stagingBanner">
+    ⚠️ STAGING ENVIRONMENT
+    <span class="env-badge" id="envBadge">LOCAL</span>
+  </div>
+
+  <div class="form-container">
+
+    <!-- ===== Header ===== -->
+    <div class="form-header">
+      <div class="brand-logo">mate <span>digital dog tag</span></div>
+      <h1 class="form-title">犬のプロフィール登録</h1>
+      <p class="form-subtitle">NFCタグに紐づく犬の情報を登録します</p>
+    </div>
+
+    <!-- ===== Progress Bar ===== -->
+    <div class="step-progress">
+      <div class="step-progress-bar">
+        <div class="step-progress-fill" id="progressFill" style="width: 25%"></div>
+      </div>
+      <div class="step-labels">
+        <span class="step-label active" data-step="1">基本情報</span>
+        <span class="step-label" data-step="2">飼い主</span>
+        <span class="step-label" data-step="3">医療</span>
+        <span class="step-label" data-step="4">確認</span>
+      </div>
+    </div>
+
+    <!-- ===== Form ===== -->
+    <form id="registerForm" novalidate>
+
+      <!-- Step 1: 犬の基本情報 -->
+      <div class="form-step active" data-step="1">
+        <div class="step-heading">🐶 犬の基本情報</div>
+
+        <!-- 写真アップロード -->
+        <div class="photo-upload" id="photoUpload">
+          <div class="photo-preview" id="photoPreview">
+            <img src="images/default-dog.svg" alt="写真を追加" class="placeholder-svg">
+          </div>
+          <input type="file" id="photoInput" name="photo" accept="image/*" hidden>
+          <button type="button" class="photo-upload-btn" id="photoUploadBtn">写真を選択</button>
+          <span class="photo-hint">タップして犬の写真を追加</span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="dogName">名前 <span class="required">*</span></label>
+          <input type="text" id="dogName" name="dogName" class="field-input" placeholder="例: コタロウ" required>
+          <span class="field-error"></span>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group flex-1">
+            <label class="field-label" for="breed">犬種 <span class="required">*</span></label>
+            <input type="text" id="breed" name="breed" class="field-input" placeholder="例: 柴犬" required>
+            <span class="field-error"></span>
+          </div>
+          <div class="field-group flex-1">
+            <label class="field-label" for="gender">性別</label>
+            <select id="gender" name="gender" class="field-input field-select">
+              <option value="">選択</option>
+              <option value="♂">♂ オス</option>
+              <option value="♀">♀ メス</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group flex-1">
+            <label class="field-label" for="birthday">誕生日</label>
+            <input type="date" id="birthday" name="birthday" class="field-input">
+          </div>
+          <div class="field-group flex-1">
+            <label class="field-label" for="weight">体重 (kg)</label>
+            <input type="number" id="weight" name="weight" class="field-input" placeholder="例: 10.2" step="0.1" min="0">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="color">毛色</label>
+          <input type="text" id="color" name="color" class="field-input" placeholder="例: 赤、クリーム、ブラック">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="personality">性格・特徴</label>
+          <textarea id="personality" name="personality" class="field-input field-textarea" placeholder="例: 人懐っこくて元気。散歩が大好き。" rows="3"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="favorites">好きなもの</label>
+          <input type="text" id="favorites" name="favorites" class="field-input" placeholder="カンマ区切り: ささみ、ボール遊び、公園">
+          <span class="field-hint">カンマ（,）で区切って入力</span>
+        </div>
+
+        <div class="form-nav">
+          <span></span>
+          <button type="button" class="btn btn-primary btn-next" data-next="2">次へ →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: 飼い主情報 -->
+      <div class="form-step" data-step="2">
+        <div class="step-heading">👤 飼い主情報</div>
+
+        <div class="field-group">
+          <label class="field-label" for="ownerName">名前 <span class="required">*</span></label>
+          <input type="text" id="ownerName" name="ownerName" class="field-input" placeholder="例: Taichi" required>
+          <span class="field-error"></span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="phone">電話番号</label>
+          <input type="tel" id="phone" name="phone" class="field-input" placeholder="例: 090-1234-5678">
+          <span class="field-hint">迷子モード時に表示されます</span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="email">メールアドレス</label>
+          <input type="email" id="email" name="email" class="field-input" placeholder="例: taichi@example.com">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="address">住所（市区町村まで）</label>
+          <input type="text" id="address" name="address" class="field-input" placeholder="例: 東京都渋谷区">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="instagram">Instagram</label>
+          <input type="text" id="instagram" name="instagram" class="field-input" placeholder="例: @kotaro_shiba">
+        </div>
+
+        <div class="form-nav">
+          <button type="button" class="btn btn-ghost btn-prev" data-prev="1">← 戻る</button>
+          <button type="button" class="btn btn-primary btn-next" data-next="3">次へ →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: 医療情報 -->
+      <div class="form-step" data-step="3">
+        <div class="step-heading">🏥 医療情報</div>
+        <p class="step-description">任意項目です。後から編集画面で追加もできます。</p>
+
+        <div class="field-group">
+          <label class="field-label" for="vaccination">最終ワクチン接種日</label>
+          <input type="date" id="vaccination" name="vaccination" class="field-input">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="allergies">アレルギー</label>
+          <input type="text" id="allergies" name="allergies" class="field-input" placeholder="例: チキン（なければ空欄）">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="microchip">マイクロチップ番号</label>
+          <input type="text" id="microchip" name="microchip" class="field-input" placeholder="例: 392145678901234">
+          <span class="field-hint">15桁の番号（オーナーのみ表示されます）</span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="vet">かかりつけ病院</label>
+          <input type="text" id="vet" name="vet" class="field-input" placeholder="例: 渋谷ペットクリニック">
+        </div>
+
+        <div class="form-nav">
+          <button type="button" class="btn btn-ghost btn-prev" data-prev="2">← 戻る</button>
+          <button type="button" class="btn btn-primary btn-next" data-next="4">確認へ →</button>
+        </div>
+      </div>
+
+      <!-- Step 4: 確認 -->
+      <div class="form-step" data-step="4">
+        <div class="step-heading">✅ 登録内容の確認</div>
+        <p class="step-description">以下の内容で登録します。間違いがあれば戻って修正できます。</p>
+
+        <div class="confirm-card" id="confirmPreview">
+          <!-- JSで動的に描画 -->
+        </div>
+
+        <div class="form-nav">
+          <button type="button" class="btn btn-ghost btn-prev" data-prev="3">← 戻る</button>
+          <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+            🐾 登録する
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- ===== Success Screen ===== -->
+    <div class="success-screen" id="successScreen" style="display:none;">
+      <div class="success-icon">🎉</div>
+      <h2 class="success-title">登録完了！</h2>
+      <p class="success-message">NFCタグにプロフィールが紐づけられました。</p>
+      <a href="index.html" class="btn btn-primary" id="viewProfileBtn" style="display:inline-block;text-decoration:none;margin-top:20px;">
+        プロフィールを見る →
+      </a>
+    </div>
+
+  </div>
+
+  <script type="module">
+    import {
+      ensureAuth, createDogProfile, uploadDogPhoto,
+      collectFormData, validateStep, showToast, isDemo, params
+    } from './js/app.js';
+
+    // ============================================================
+    // Tag ID - URLパラメータまたはデモ用
+    // ============================================================
+    const tagId = params.get('tag') || 'tag-' + Date.now().toString(36);
+
+    // ============================================================
+    // Step Navigation
+    // ============================================================
+    const form = document.getElementById('registerForm');
+    const steps = form.querySelectorAll('.form-step');
+    const progressFill = document.getElementById('progressFill');
+    const stepLabels = document.querySelectorAll('.step-label');
+    let currentStep = 1;
+
+    function goToStep(n) {
+      // バリデーション（進む場合のみ）
+      if (n > currentStep) {
+        const currentStepEl = form.querySelector(`.form-step[data-step="${currentStep}"]`);
+        if (!validateStep(currentStepEl)) {
+          showToast('必須項目を入力してください', 'error');
+          return;
+        }
+      }
+
+      currentStep = n;
+      steps.forEach(s => s.classList.toggle('active', +s.dataset.step === n));
+      progressFill.style.width = (n / 4 * 100) + '%';
+      stepLabels.forEach(l => {
+        const ls = +l.dataset.step;
+        l.classList.toggle('active', ls === n);
+        l.classList.toggle('done', ls < n);
+      });
+
+      // Step 4: 確認プレビューを生成
+      if (n === 4) renderConfirmPreview();
+
+      // スクロールトップ
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 次へ / 戻るボタン
+    form.addEventListener('click', (e) => {
+      const nextBtn = e.target.closest('.btn-next');
+      const prevBtn = e.target.closest('.btn-prev');
+      if (nextBtn) goToStep(+nextBtn.dataset.next);
+      if (prevBtn) goToStep(+prevBtn.dataset.prev);
+    });
+
+    // ============================================================
+    // Photo Upload
+    // ============================================================
+    let selectedPhotoFile = null;
+    let photoPreviewUrl = null;
+
+    const photoUploadBtn = document.getElementById('photoUploadBtn');
+    const photoInput = document.getElementById('photoInput');
+    const photoPreview = document.getElementById('photoPreview');
+
+    photoUploadBtn.addEventListener('click', () => photoInput.click());
+    photoPreview.addEventListener('click', () => photoInput.click());
+
+    photoInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      // 5MB制限
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('写真は5MB以下にしてください', 'error');
+        return;
+      }
+
+      selectedPhotoFile = file;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        photoPreviewUrl = ev.target.result;
+        photoPreview.innerHTML = `<img src="${ev.target.result}" alt="プレビュー">`;
+        photoPreview.classList.add('has-photo');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // ============================================================
+    // Confirm Preview
+    // ============================================================
+    function renderConfirmPreview() {
+      const data = collectFormData(form);
+      const container = document.getElementById('confirmPreview');
+
+      container.innerHTML = `
+        <div class="confirm-section">
+          <div class="confirm-photo"><img src="${photoPreviewUrl || 'images/default-dog.svg'}" alt=""></div>
+          <div class="confirm-name">${data.name || '（未入力）'}</div>
+          <div class="confirm-breed">${data.breed || '（未入力）'} ${data.gender ? '/ ' + data.gender : ''}</div>
+        </div>
+
+        <div class="confirm-section">
+          <div class="confirm-section-title">基本情報</div>
+          ${confirmRow('誕生日', data.birthday || '—')}
+          ${confirmRow('体重', data.weight || '—')}
+          ${confirmRow('毛色', data.color || '—')}
+          ${data.personality ? confirmRow('性格', data.personality) : ''}
+          ${data.favorites.length ? confirmRow('好きなもの', data.favorites.join('、')) : ''}
+        </div>
+
+        <div class="confirm-section">
+          <div class="confirm-section-title">飼い主情報</div>
+          ${confirmRow('名前', data.owner.name || '—')}
+          ${confirmRow('電話', data.owner.phone || '—')}
+          ${confirmRow('メール', data.owner.email || '—')}
+          ${confirmRow('住所', data.owner.address || '—')}
+          ${data.socialLinks.instagram ? confirmRow('Instagram', data.socialLinks.instagram) : ''}
+        </div>
+
+        <div class="confirm-section">
+          <div class="confirm-section-title">医療情報</div>
+          ${confirmRow('ワクチン', data.medical.vaccination || '—')}
+          ${confirmRow('アレルギー', data.medical.allergies || '—')}
+          ${confirmRow('マイクロチップ', data.medical.microchip || '—')}
+          ${confirmRow('病院', data.medical.vet || '—')}
+        </div>
+
+        <div class="confirm-tag-id">Tag ID: ${tagId}</div>
+      `;
+    }
+
+    function confirmRow(label, value) {
+      return `<div class="confirm-row"><span class="confirm-label">${label}</span><span class="confirm-value">${value}</span></div>`;
+    }
+
+    // ============================================================
+    // Submit
+    // ============================================================
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '登録中...';
+
+      try {
+        const data = collectFormData(form);
+
+        // 写真アップロード
+        if (selectedPhotoFile) {
+          const photoResult = await uploadDogPhoto(tagId, selectedPhotoFile);
+          if (photoResult.success) {
+            data.photo = photoResult.url;
+          }
+        }
+
+        // Firestore に保存
+        const result = await createDogProfile(tagId, data);
+
+        if (result.success) {
+          // 成功画面
+          form.style.display = 'none';
+          document.querySelector('.step-progress').style.display = 'none';
+          const successScreen = document.getElementById('successScreen');
+          successScreen.style.display = 'block';
+
+          // プロフィールページへのリンクを設定
+          const demoParam = isDemo ? '&demo=mydog' : '';
+          document.getElementById('viewProfileBtn').href =
+            `index.html?tag=${tagId}${demoParam}`;
+
+          showToast('登録が完了しました！');
+        } else {
+          showToast('登録に失敗しました: ' + result.error, 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = '🐾 登録する';
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('エラーが発生しました', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '🐾 登録する';
+      }
+    });
+
+    // ============================================================
+    // Init
+    // ============================================================
+    const env = params.get('env') || 'local';
+    document.getElementById('envBadge').textContent = env.toUpperCase();
+    console.log(`🐾 mate 登録画面 | Tag: ${tagId} | Env: ${env}`);
+  </script>
+
+</body>
+</html>

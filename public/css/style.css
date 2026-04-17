@@ -1,0 +1,958 @@
+/* ============================================================
+   mate Digital Dog Tag - Profile Styles
+   Brand: dark navy (#0A1628) + cyan (#00D4FF)
+   ============================================================ */
+
+:root {
+  --navy: #0A1628;
+  --navy-light: #132038;
+  --navy-mid: #1A2D4A;
+  --cyan: #00D4FF;
+  --cyan-soft: #00D4FF33;
+  --white: #FFFFFF;
+  --gray-light: #B8C4D4;
+  --gray: #6B7B8F;
+  --red-alert: #FF4757;
+  --orange-warn: #FFA502;
+  --green-ok: #2ED573;
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--navy);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* === Staging Banner === */
+.staging-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: linear-gradient(90deg, var(--orange-warn), #FF6B35);
+  color: var(--navy);
+  text-align: center;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.staging-banner .env-badge {
+  background: var(--navy);
+  color: var(--orange-warn);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+/* === Demo Switcher Panel === */
+.demo-switcher {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  background: var(--navy-light);
+  border-top: 2px solid var(--cyan);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.demo-switcher-label {
+  font-size: 11px;
+  color: var(--gray);
+  white-space: nowrap;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.demo-btn {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border: 1.5px solid var(--navy-mid);
+  border-radius: 20px;
+  background: var(--navy-mid);
+  color: var(--gray-light);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.demo-btn:hover {
+  border-color: var(--cyan);
+  color: var(--white);
+}
+
+.demo-btn.active {
+  background: var(--cyan);
+  color: var(--navy);
+  border-color: var(--cyan);
+}
+
+.demo-btn.lost {
+  border-color: var(--red-alert);
+}
+
+.demo-btn.lost.active {
+  background: var(--red-alert);
+  border-color: var(--red-alert);
+  color: var(--white);
+}
+
+/* === Profile Page === */
+.profile-container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 52px 20px 100px;
+}
+
+/* Header */
+.profile-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.brand-logo {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.brand-logo span {
+  opacity: 0.5;
+}
+
+.dog-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--navy-mid);
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  border: 3px solid var(--cyan-soft);
+  overflow: hidden;
+  position: relative;
+}
+
+.dog-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dog-photo .placeholder {
+  color: var(--gray);
+  font-size: 56px;
+}
+
+.dog-photo .placeholder-svg {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+.dog-name {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+.dog-breed {
+  font-size: 15px;
+  color: var(--gray-light);
+  font-weight: 500;
+}
+
+/* Owner badge */
+.owner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.owner-badge.is-owner {
+  background: var(--cyan-soft);
+  color: var(--cyan);
+}
+
+.owner-badge.is-visitor {
+  background: rgba(107, 123, 143, 0.2);
+  color: var(--gray-light);
+}
+
+/* Lost mode alert */
+.lost-alert {
+  background: linear-gradient(135deg, var(--red-alert), #c0392b);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 24px;
+  animation: pulse-border 2s infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.lost-alert::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  animation: pulse-border 1.5s infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.lost-alert-title {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lost-alert-message {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.95;
+  margin-bottom: 12px;
+}
+
+.lost-alert-meta {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.lost-contact-btn {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--white);
+  color: var(--red-alert);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+/* Info Cards */
+.info-card {
+  background: var(--navy-light);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+}
+
+.info-card-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gray);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 13px;
+  color: var(--gray);
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  text-align: right;
+}
+
+.info-value.hidden {
+  color: var(--gray);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Tags / Favorites */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tag {
+  padding: 6px 14px;
+  background: var(--navy-mid);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--gray-light);
+  font-weight: 500;
+}
+
+/* Personality */
+.personality-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--gray-light);
+  margin-top: 6px;
+}
+
+/* Social Links */
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--navy-mid);
+  border-radius: 20px;
+  color: var(--cyan);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+.social-link:hover {
+  background: var(--cyan-soft);
+}
+
+/* Action Button (Edit / Contact) */
+.action-btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: var(--cyan);
+  color: var(--navy);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.5px;
+  margin-top: 24px;
+  transition: opacity 0.2s;
+}
+
+.action-btn:hover {
+  opacity: 0.9;
+}
+
+/* Empty state */
+.empty-value {
+  color: var(--gray);
+  font-size: 13px;
+}
+
+/* NFC Tag ID */
+.tag-id {
+  text-align: center;
+  font-size: 11px;
+  color: var(--gray);
+  margin-top: 24px;
+  opacity: 0.5;
+}
+
+/* ============================================================
+   FORM STYLES - 登録・編集画面
+   ============================================================ */
+
+/* === Form Container === */
+.form-container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 52px 20px 40px;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 800;
+  margin-top: 12px;
+  letter-spacing: -0.3px;
+}
+
+.form-subtitle {
+  font-size: 14px;
+  color: var(--gray-light);
+  margin-top: 6px;
+}
+
+.back-link {
+  display: inline-block;
+  color: var(--cyan);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  transition: opacity 0.2s;
+}
+
+.back-link:hover {
+  opacity: 0.8;
+}
+
+/* === Step Progress Bar === */
+.step-progress {
+  margin-bottom: 32px;
+}
+
+.step-progress-bar {
+  height: 4px;
+  background: var(--navy-mid);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.step-progress-fill {
+  height: 100%;
+  background: var(--cyan);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.step-labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.step-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+}
+
+.step-label.active {
+  color: var(--cyan);
+}
+
+.step-label.done {
+  color: var(--green-ok);
+}
+
+/* === Form Steps === */
+.form-step {
+  display: none;
+}
+
+.form-step.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-heading {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.step-description {
+  font-size: 13px;
+  color: var(--gray-light);
+  margin-bottom: 24px;
+}
+
+/* === Photo Upload === */
+.photo-upload {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.photo-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--navy-mid);
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px dashed var(--gray);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.photo-preview:hover {
+  border-color: var(--cyan);
+}
+
+.photo-preview.has-photo {
+  border-style: solid;
+  border-color: var(--cyan-soft);
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-placeholder {
+  font-size: 40px;
+  opacity: 0.5;
+}
+
+.photo-preview .placeholder-svg {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  opacity: 0.7;
+}
+
+.photo-upload-btn {
+  background: none;
+  border: none;
+  color: var(--cyan);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.photo-hint {
+  display: block;
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 4px;
+}
+
+/* === Field Groups === */
+.field-group {
+  margin-bottom: 18px;
+}
+
+.field-row {
+  display: flex;
+  gap: 12px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.field-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-light);
+  margin-bottom: 6px;
+}
+
+.required {
+  color: var(--cyan);
+}
+
+.field-input {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--navy-mid);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--white);
+  font-size: 15px;
+  font-family: var(--font-main);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  -webkit-appearance: none;
+}
+
+.field-input::placeholder {
+  color: var(--gray);
+}
+
+.field-input:focus {
+  border-color: var(--cyan);
+  background: var(--navy-light);
+}
+
+.field-input.input-error {
+  border-color: var(--red-alert);
+}
+
+.field-select {
+  cursor: pointer;
+}
+
+.field-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.6;
+}
+
+.field-hint {
+  display: block;
+  font-size: 11px;
+  color: var(--gray);
+  margin-top: 4px;
+}
+
+.field-error {
+  display: block;
+  font-size: 12px;
+  color: var(--red-alert);
+  margin-top: 4px;
+  min-height: 16px;
+}
+
+/* date inputs on webkit */
+.field-input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
+}
+
+/* === Buttons === */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--cyan);
+  color: var(--navy);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--gray-light);
+  border: 1.5px solid var(--navy-mid);
+}
+
+.btn-ghost:hover {
+  border-color: var(--gray);
+  color: var(--white);
+}
+
+.form-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* === Edit Page Tabs === */
+.edit-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  background: var(--navy-mid);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+}
+
+.edit-tab {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--gray);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-tab.active {
+  background: var(--navy-light);
+  color: var(--white);
+}
+
+.edit-tab:hover:not(.active) {
+  color: var(--gray-light);
+}
+
+.edit-section {
+  display: none;
+}
+
+.edit-section.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+.edit-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.btn-save {
+  width: 100%;
+}
+
+.edit-actions .btn-ghost {
+  text-align: center;
+}
+
+/* === Confirm Card (Register Step 4) === */
+.confirm-card {
+  background: var(--navy-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.confirm-section {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.confirm-section:last-child {
+  border-bottom: none;
+}
+
+.confirm-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 10px;
+  border: 2px solid var(--cyan-soft);
+}
+
+.confirm-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.confirm-name {
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.confirm-breed {
+  font-size: 14px;
+  color: var(--gray-light);
+  text-align: center;
+  margin-top: 2px;
+}
+
+.confirm-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gray);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.confirm-label {
+  font-size: 13px;
+  color: var(--gray);
+}
+
+.confirm-value {
+  font-size: 13px;
+  color: var(--white);
+  font-weight: 500;
+  text-align: right;
+  max-width: 60%;
+}
+
+.confirm-tag-id {
+  text-align: center;
+  font-size: 11px;
+  color: var(--gray);
+  padding: 10px;
+  opacity: 0.5;
+}
+
+/* === Success Screen === */
+.success-screen {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.success-title {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.success-message {
+  font-size: 15px;
+  color: var(--gray-light);
+  margin-top: 8px;
+}
+
+/* === Loading State === */
+.loading-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray);
+}
+
+.loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--navy-mid);
+  border-top-color: var(--cyan);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* === Toast Notification === */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.toast-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-success {
+  background: var(--green-ok);
+  color: var(--navy);
+}
+
+.toast-error {
+  background: var(--red-alert);
+  color: var(--white);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 380px) {
+  .profile-container {
+    padding: 52px 14px 100px;
+  }
+  .form-container {
+    padding: 52px 14px 40px;
+  }
+  .dog-name {
+    font-size: 26px;
+  }
+  .form-title {
+    font-size: 20px;
+  }
+}

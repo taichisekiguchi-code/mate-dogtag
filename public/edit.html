@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>mate - プロフィール編集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== Staging Banner ===== -->
+  <div class="staging-banner" id="stagingBanner">
+    ⚠️ STAGING ENVIRONMENT
+    <span class="env-badge" id="envBadge">LOCAL</span>
+  </div>
+
+  <div class="form-container">
+
+    <!-- ===== Header ===== -->
+    <div class="form-header">
+      <a href="index.html" class="back-link" id="backLink">← プロフィールに戻る</a>
+      <div class="brand-logo">mate <span>digital dog tag</span></div>
+      <h1 class="form-title">プロフィール編集</h1>
+    </div>
+
+    <!-- ===== Loading ===== -->
+    <div class="loading-state" id="loadingState">
+      <div class="loading-spinner"></div>
+      <p>読み込み中...</p>
+    </div>
+
+    <!-- ===== Edit Form ===== -->
+    <form id="editForm" novalidate style="display:none;">
+
+      <!-- セクション切り替えタブ -->
+      <div class="edit-tabs">
+        <button type="button" class="edit-tab active" data-section="basic">🐶 基本</button>
+        <button type="button" class="edit-tab" data-section="owner">👤 飼い主</button>
+        <button type="button" class="edit-tab" data-section="medical">🏥 医療</button>
+      </div>
+
+      <!-- Section: 基本情報 -->
+      <div class="edit-section active" data-section="basic">
+
+        <!-- 写真 -->
+        <div class="photo-upload">
+          <div class="photo-preview" id="photoPreview">
+            <img src="images/default-dog.svg" alt="写真を変更" class="placeholder-svg">
+          </div>
+          <input type="file" id="photoInput" name="photo" accept="image/*" hidden>
+          <button type="button" class="photo-upload-btn" id="photoUploadBtn">写真を変更</button>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="dogName">名前 <span class="required">*</span></label>
+          <input type="text" id="dogName" name="dogName" class="field-input" required>
+          <span class="field-error"></span>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group flex-1">
+            <label class="field-label" for="breed">犬種 <span class="required">*</span></label>
+            <input type="text" id="breed" name="breed" class="field-input" required>
+            <span class="field-error"></span>
+          </div>
+          <div class="field-group flex-1">
+            <label class="field-label" for="gender">性別</label>
+            <select id="gender" name="gender" class="field-input field-select">
+              <option value="">選択</option>
+              <option value="♂">♂ オス</option>
+              <option value="♀">♀ メス</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group flex-1">
+            <label class="field-label" for="birthday">誕生日</label>
+            <input type="date" id="birthday" name="birthday" class="field-input">
+          </div>
+          <div class="field-group flex-1">
+            <label class="field-label" for="weight">体重 (kg)</label>
+            <input type="number" id="weight" name="weight" class="field-input" step="0.1" min="0">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="color">毛色</label>
+          <input type="text" id="color" name="color" class="field-input">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="personality">性格・特徴</label>
+          <textarea id="personality" name="personality" class="field-input field-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="favorites">好きなもの</label>
+          <input type="text" id="favorites" name="favorites" class="field-input">
+          <span class="field-hint">カンマ（,）で区切って入力</span>
+        </div>
+      </div>
+
+      <!-- Section: 飼い主情報 -->
+      <div class="edit-section" data-section="owner">
+        <div class="field-group">
+          <label class="field-label" for="ownerName">名前 <span class="required">*</span></label>
+          <input type="text" id="ownerName" name="ownerName" class="field-input" required>
+          <span class="field-error"></span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="phone">電話番号</label>
+          <input type="tel" id="phone" name="phone" class="field-input">
+          <span class="field-hint">迷子モード時に表示されます</span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="email">メールアドレス</label>
+          <input type="email" id="email" name="email" class="field-input">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="address">住所（市区町村まで）</label>
+          <input type="text" id="address" name="address" class="field-input">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="instagram">Instagram</label>
+          <input type="text" id="instagram" name="instagram" class="field-input" placeholder="@username">
+        </div>
+      </div>
+
+      <!-- Section: 医療情報 -->
+      <div class="edit-section" data-section="medical">
+        <div class="field-group">
+          <label class="field-label" for="vaccination">最終ワクチン接種日</label>
+          <input type="date" id="vaccination" name="vaccination" class="field-input">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="allergies">アレルギー</label>
+          <input type="text" id="allergies" name="allergies" class="field-input">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="microchip">マイクロチップ番号</label>
+          <input type="text" id="microchip" name="microchip" class="field-input">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="vet">かかりつけ病院</label>
+          <input type="text" id="vet" name="vet" class="field-input">
+        </div>
+      </div>
+
+      <!-- 保存ボタン（常に表示） -->
+      <div class="edit-actions">
+        <button type="submit" class="btn btn-primary btn-save" id="saveBtn">
+          💾 変更を保存
+        </button>
+        <a href="index.html" class="btn btn-ghost" id="cancelBtn">キャンセル</a>
+      </div>
+
+    </form>
+  </div>
+
+  <script type="module">
+    import {
+      ensureAuth, getDogByTagId, updateDogProfile, uploadDogPhoto,
+      collectFormData, populateForm, validateStep, showToast, isDemo, params
+    } from './js/app.js';
+
+    // ============================================================
+    // Init
+    // ============================================================
+    const tagId = params.get('tag') || 'tag-001';
+    const demoKey = params.get('demo') || 'mydog';
+    const env = params.get('env') || 'local';
+    document.getElementById('envBadge').textContent = env.toUpperCase();
+
+    // 戻るリンクにパラメータ引き継ぎ
+    const backParams = new URLSearchParams();
+    if (params.get('tag')) backParams.set('tag', params.get('tag'));
+    if (params.get('demo')) backParams.set('demo', params.get('demo'));
+    const backUrl = 'index.html' + (backParams.toString() ? '?' + backParams : '');
+    document.getElementById('backLink').href = backUrl;
+    document.getElementById('cancelBtn').href = backUrl;
+
+    const form = document.getElementById('editForm');
+    const loadingState = document.getElementById('loadingState');
+
+    // ============================================================
+    // Load existing data
+    // ============================================================
+    async function loadProfile() {
+      const dog = await getDogByTagId(tagId);
+      if (!dog) {
+        showToast('プロフィールが見つかりません', 'error');
+        return;
+      }
+
+      populateForm(form, dog);
+
+      // 写真プレビュー
+      if (dog.photo) {
+        document.getElementById('photoPreview').innerHTML =
+          `<img src="${dog.photo}" alt="${dog.name}">`;
+        document.getElementById('photoPreview').classList.add('has-photo');
+      }
+
+      loadingState.style.display = 'none';
+      form.style.display = 'block';
+    }
+
+    loadProfile();
+
+    // ============================================================
+    // Tab Navigation
+    // ============================================================
+    const tabs = document.querySelectorAll('.edit-tab');
+    const sections = document.querySelectorAll('.edit-section');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.section;
+        tabs.forEach(t => t.classList.toggle('active', t === tab));
+        sections.forEach(s => s.classList.toggle('active', s.dataset.section === target));
+      });
+    });
+
+    // ============================================================
+    // Photo Upload
+    // ============================================================
+    let selectedPhotoFile = null;
+
+    const photoUploadBtn = document.getElementById('photoUploadBtn');
+    const photoInput = document.getElementById('photoInput');
+    const photoPreview = document.getElementById('photoPreview');
+
+    photoUploadBtn.addEventListener('click', () => photoInput.click());
+    photoPreview.addEventListener('click', () => photoInput.click());
+
+    photoInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('写真は5MB以下にしてください', 'error');
+        return;
+      }
+      selectedPhotoFile = file;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        photoPreview.innerHTML = `<img src="${ev.target.result}" alt="プレビュー">`;
+        photoPreview.classList.add('has-photo');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // ============================================================
+    // Save
+    // ============================================================
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // 必須項目チェック（全セクション）
+      let valid = true;
+      sections.forEach(sec => {
+        if (!validateStep(sec)) valid = false;
+      });
+      if (!valid) {
+        showToast('必須項目を入力してください', 'error');
+        return;
+      }
+
+      const saveBtn = document.getElementById('saveBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = '保存中...';
+
+      try {
+        const data = collectFormData(form);
+
+        // 写真変更があればアップロード
+        if (selectedPhotoFile) {
+          const photoResult = await uploadDogPhoto(tagId, selectedPhotoFile);
+          if (photoResult.success) {
+            data.photo = photoResult.url;
+          }
+        }
+
+        const result = await updateDogProfile(tagId, data);
+
+        if (result.success) {
+          showToast('保存しました！');
+          setTimeout(() => {
+            window.location.href = backUrl;
+          }, 1200);
+        } else {
+          showToast('保存に失敗しました: ' + result.error, 'error');
+          saveBtn.disabled = false;
+          saveBtn.textContent = '💾 変更を保存';
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('エラーが発生しました', 'error');
+        saveBtn.disabled = false;
+        saveBtn.textContent = '💾 変更を保存';
+      }
+    });
+
+    console.log(`🐾 mate 編集画面 | Tag: ${tagId} | Demo: ${demoKey}`);
+  </script>
+
+</body>
+</html>

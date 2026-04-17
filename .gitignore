@@ -1,0 +1,64 @@
+# ============================================================
+# mate Digital Dog Tag - .gitignore
+# ============================================================
+
+# --- Node.js ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json.bak
+
+# --- Firebase ---
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+firestore-debug.log
+ui-debug.log
+.firebaserc.local
+*.firebase-adminsdk*.json
+serviceAccountKey.json
+
+# --- Firebase Emulator ---
+.emulator/
+firestore-export/
+seed-data/*.local.json
+
+# --- Environment / Secrets ---
+.env
+.env.local
+.env.*.local
+.env.production
+*.key
+*.pem
+secrets/
+
+# --- Build / Cache ---
+dist/
+build/
+.cache/
+.parcel-cache/
+.next/
+out/
+
+# --- Editor / OS ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json.example
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# --- Logs ---
+logs/
+*.log
+
+# --- Coverage / Testing ---
+coverage/
+.nyc_output/
+
+# --- Claude / Cowork (任意) ---
+.claude/cache/

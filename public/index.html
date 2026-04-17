@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>mate - Digital Dog Tag</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== Staging Banner ===== -->
+  <div class="staging-banner" id="stagingBanner">
+    ⚠️ STAGING ENVIRONMENT
+    <span class="env-badge" id="envBadge">LOCAL</span>
+  </div>
+
+  <!-- ===== Profile Content ===== -->
+  <div class="profile-container" id="profileContainer">
+    <!-- 動的に描画 -->
+  </div>
+
+  <!-- ===== Demo Switcher (ステージング専用) ===== -->
+  <div class="demo-switcher" id="demoSwitcher">
+    <span class="demo-switcher-label">VIEW:</span>
+    <button class="demo-btn active" data-demo="mydog">🏠 自分の犬</button>
+    <button class="demo-btn" data-demo="otherdog">👀 他人の犬</button>
+    <button class="demo-btn lost" data-demo="lostdog">🚨 迷子モード</button>
+    <button class="demo-btn" data-demo="newdog">✨ 新規登録</button>
+    <a href="register.html" class="demo-btn" style="text-decoration:none;">📝 登録画面</a>
+    <a href="edit.html?demo=mydog" class="demo-btn" style="text-decoration:none;">✏️ 編集画面</a>
+  </div>
+
+  <script type="module">
+    import { DEMO_DOGS, getDemoProfile } from './js/demo-data.js';
+
+    // ============================================================
+    // Profile Renderer
+    // ============================================================
+
+    function renderProfile(dog) {
+      const container = document.getElementById('profileContainer');
+
+      let html = '';
+
+      // Header
+      html += `
+        <div class="profile-header">
+          <div class="brand-logo">mate <span>digital dog tag</span></div>
+          <div class="dog-photo">
+            ${dog.photo
+              ? `<img src="${dog.photo}" alt="${dog.name}">`
+              : `<img src="images/default-dog.svg" alt="No photo" class="placeholder-svg">`
+            }
+          </div>
+          <div class="dog-name">${dog.name}</div>
+          <div class="dog-breed">${dog.breed}${dog.gender ? ' / ' + dog.gender : ''}</div>
+          <div class="owner-badge ${dog.isOwner ? 'is-owner' : 'is-visitor'}">
+            ${dog.isOwner ? '🔑 オーナー表示' : '👁️ ビジター表示'}
+          </div>
+        </div>
+      `;
+
+      // Lost Mode Alert
+      if (dog.isLostMode) {
+        html += `
+          <div class="lost-alert">
+            <div class="lost-alert-title">🚨 迷子犬の情報</div>
+            <div class="lost-alert-message">${dog.lostMessage || ''}</div>
+            <div class="lost-alert-meta">
+              📅 行方不明: ${dog.lostSince || '不明'}<br>
+              📍 最終目撃: ${dog.lastSeenLocation || '不明'}
+            </div>
+            <a href="tel:${dog.owner.phone}" class="lost-contact-btn">
+              📞 飼い主に連絡する
+            </a>
+          </div>
+        `;
+      }
+
+      // Basic Info Card
+      html += `
+        <div class="info-card">
+          <div class="info-card-title">基本情報</div>
+          ${infoRow('年齢', dog.age || '—')}
+          ${infoRow('体重', dog.weight ? dog.weight : '—')}
+          ${infoRow('誕生日', dog.birthday || '—')}
+          ${infoRow('カラー', dog.color || '—')}
+        </div>
+      `;
+
+      // Personality
+      if (dog.personality) {
+        html += `
+          <div class="info-card">
+            <div class="info-card-title">性格・特徴</div>
+            <div class="personality-text">${dog.personality}</div>
+          </div>
+        `;
+      }
+
+      // Favorites
+      if (dog.favorites && dog.favorites.length > 0) {
+        html += `
+          <div class="info-card">
+            <div class="info-card-title">好きなもの</div>
+            <div class="tags">
+              ${dog.favorites.map(f => `<span class="tag">${f}</span>`).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Medical Info (Owner only, or partial for visitor)
+      if (dog.isOwner || dog.medical.allergies) {
+        html += `
+          <div class="info-card">
+            <div class="info-card-title">医療情報${!dog.isOwner ? '（公開分のみ）' : ''}</div>
+            ${dog.medical.allergies ? infoRow('アレルギー', dog.medical.allergies) : ''}
+            ${dog.isOwner && dog.medical.vaccination ? infoRow('ワクチン接種日', dog.medical.vaccination) : ''}
+            ${dog.isOwner && dog.medical.microchip ? infoRow('マイクロチップ', dog.medical.microchip) : ''}
+            ${dog.isOwner && dog.medical.vet ? infoRow('かかりつけ病院', dog.medical.vet) : ''}
+            ${!dog.isOwner && !dog.medical.allergies ? '<div class="empty-value">表示できる情報はありません</div>' : ''}
+          </div>
+        `;
+      }
+
+      // Owner Info (visible depends on context)
+      if (dog.isOwner) {
+        html += `
+          <div class="info-card">
+            <div class="info-card-title">オーナー情報</div>
+            ${infoRow('名前', dog.owner.name)}
+            ${infoRow('電話', dog.owner.phone || '未設定')}
+            ${infoRow('メール', dog.owner.email || '未設定')}
+            ${infoRow('住所', dog.owner.address || '未設定')}
+          </div>
+        `;
+      } else if (!dog.isLostMode) {
+        html += `
+          <div class="info-card">
+            <div class="info-card-title">オーナー情報</div>
+            ${infoRow('名前', dog.owner.name)}
+            <div class="info-row">
+              <span class="info-label">連絡先</span>
+              <span class="info-value hidden">非公開</span>
+            </div>
+          </div>
+        `;
+      }
+
+      // Social Links
+      if (dog.socialLinks && Object.keys(dog.socialLinks).length > 0) {
+        html += `<div class="info-card">
+          <div class="info-card-title">SNS</div>`;
+        if (dog.socialLinks.instagram) {
+          html += `<a href="https://instagram.com/${dog.socialLinks.instagram.replace('@','')}" class="social-link" target="_blank">📷 ${dog.socialLinks.instagram}</a>`;
+        }
+        html += `</div>`;
+      }
+
+      // Action Buttons
+      if (dog.isOwner) {
+        const editParams = new URLSearchParams(window.location.search);
+        editParams.set('tag', dog.id);
+        html += `<a href="edit.html?${editParams.toString()}" class="action-btn" style="text-decoration:none;">✏️ プロフィールを編集</a>`;
+      } else if (!dog.isLostMode) {
+        // ビジター向け: NFCタグ自体への登録リンク（未登録タグの場合）
+      }
+
+      // Tag ID
+      html += `<div class="tag-id">Tag ID: ${dog.id}</div>`;
+
+      container.innerHTML = html;
+    }
+
+    function infoRow(label, value) {
+      const isEmpty = !value || value === '—' || value === '未設定' || value === '未登録' || value === '不明';
+      return `
+        <div class="info-row">
+          <span class="info-label">${label}</span>
+          <span class="info-value${isEmpty ? ' hidden' : ''}">${value}</span>
+        </div>
+      `;
+    }
+
+    // ============================================================
+    // Demo Switcher Logic
+    // ============================================================
+
+    const buttons = document.querySelectorAll('.demo-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const key = btn.dataset.demo;
+        const dog = getDemoProfile(key);
+        renderProfile(dog);
+        // URL にデモパラメータを反映
+        const url = new URL(window.location);
+        url.searchParams.set('demo', key);
+        history.replaceState(null, '', url);
+      });
+    });
+
+    // ============================================================
+    // Initial Render
+    // ============================================================
+
+    // URLパラメータからデモを復元
+    const params = new URLSearchParams(window.location.search);
+    const initialDemo = params.get('demo') || 'mydog';
+
+    // 対応するボタンをアクティブに
+    buttons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.demo === initialDemo);
+    });
+
+    // 環境バッジ更新
+    const env = params.get('env') || 'local';
+    document.getElementById('envBadge').textContent = env.toUpperCase();
+
+    // 描画
+    renderProfile(getDemoProfile(initialDemo));
+
+    console.log('🐾 mate Digital Dog Tag - Staging Ready');
+    console.log('💡 URL パラメータで切替: ?demo=mydog|otherdog|lostdog|newdog&env=local|staging|prod');
+  </script>
+
+</body>
+</html>
